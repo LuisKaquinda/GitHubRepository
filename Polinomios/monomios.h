@@ -1,0 +1,154 @@
+#ifndef MONOMIOS_H_INCLUDED
+#define MONOMIOS_H_INCLUDED
+#include <clocale>
+#include "fracoes.h"
+
+using namespace std;
+
+class Monomio
+{
+private:
+    float coeficiente;
+    char variavel;
+    int grauDaVariavel;
+public:
+    Monomio();
+    Monomio(char variavel);
+    Monomio(float coeficiente, char variavel);
+    Monomio(Fracao coeficiente, char variavel);
+    Monomio(char variavel, int grau);
+    Monomio(float coeficiente, char variavel, int grau);
+    Monomio(Fracao coeficiente, char variavel, int grau);
+    float getCoeficiente();
+    void setCoeficiente(float coeficiente);
+    void setCoeficienteFracionario(Fracao coeficiente);
+    char getVariavel();
+    void setVariavel(char variavel);
+    int getGrauDaVariavel();
+    void setGrauDaVariavel(int grau);
+    Monomio somaMonomios(Monomio monomio);
+    Monomio subtraiMonomios(Monomio monomio);
+    Monomio multiplicaMonomios(Monomio monomio);
+    Monomio divideMonomios(Monomio monomio);
+    ~Monomio();
+};
+
+//Constructors
+
+Monomio::Monomio() {}
+
+Monomio::Monomio(char variavel, int grau) {
+    this->coeficiente = 1;
+    this->variavel = variavel;
+    this->grauDaVariavel = grau;
+}
+Monomio::Monomio(char variavel) {
+    this->coeficiente = 1;
+    this->variavel = variavel;
+    this->grauDaVariavel = 1;
+}
+Monomio::Monomio(float coeficiente, char variavel) {
+    this->coeficiente = coeficiente;
+    this->variavel = variavel;
+    this->grauDaVariavel = 1;
+}
+Monomio::Monomio(float coeficiente, char variavel, int grau) {
+    this->coeficiente = coeficiente;
+    this->variavel = variavel;
+    this->grauDaVariavel = grau;
+}
+Monomio::Monomio(Fracao coeficiente, char variavel, int grau) {
+    this->coeficiente = coeficiente.getNumerador()/coeficiente.getDenominador();
+    this->variavel = variavel;
+    this->grauDaVariavel = grau;
+}
+
+Monomio::Monomio(Fracao coeficiente, char variavel) {
+    this->coeficiente = coeficiente.getNumerador()/coeficiente.getDenominador();
+    this->variavel = variavel;
+    this->grauDaVariavel = 1;
+}
+
+// End Constructors
+
+Monomio::~Monomio() {}
+
+//Setters e Getters
+
+float Monomio::getCoeficiente() {
+    return this->coeficiente;
+}
+
+void Monomio::setCoeficiente(float coeficiente) {
+    this->coeficiente = coeficiente;
+}
+
+void Monomio::setCoeficienteFracionario(Fracao coeficiente){
+    this->coeficiente = coeficiente.getNumerador()/coeficiente.getDenominador();
+}
+
+char Monomio::getVariavel() {
+    return this->variavel;
+}
+
+void Monomio::setVariavel(char variavel) {
+    this->variavel = variavel;
+}
+
+int Monomio::getGrauDaVariavel(){
+    return this->grauDaVariavel;
+}
+
+void Monomio::setGrauDaVariavel(int grau){
+    this->grauDaVariavel = grau;
+}
+
+//End Setters e Getters
+
+Monomio Monomio::somaMonomios( Monomio monomio ) {
+    if ((getVariavel() != monomio.getVariavel()) || (getGrauDaVariavel() != monomio.getGrauDaVariavel())) {
+        Monomio resultado (0, 'x', 0);
+        return resultado;
+    } else {
+        if(getCoeficiente() == 0) {
+            return monomio;
+        } else if(monomio.getCoeficiente() == 0) {
+            Monomio resultado;
+            resultado.setCoeficiente(getCoeficiente());
+            resultado.setVariavel(getVariavel());
+            resultado.setGrauDaVariavel(getGrauDaVariavel());
+            return resultado;
+        } else {
+            Monomio resultado;
+            resultado.setCoeficiente(getCoeficiente() + monomio.getCoeficiente());
+            resultado.setVariavel(monomio.getVariavel());
+            resultado.setGrauDaVariavel(monomio.getGrauDaVariavel());
+            return resultado;
+        }
+    }
+}
+
+Monomio Monomio::subtraiMonomios( Monomio monomio ) {
+    if ((getVariavel() != monomio.getVariavel()) || (getGrauDaVariavel() != monomio.getGrauDaVariavel())) {
+        Monomio resultado (0, 'x', 0);
+        return resultado;
+    } else {
+        if(getCoeficiente() == 0) {
+            return monomio;
+        } else if(monomio.getCoeficiente() == 0) {
+            Monomio resultado;
+            resultado.setCoeficiente(getCoeficiente());
+            resultado.setVariavel(getVariavel());
+            resultado.setGrauDaVariavel(getGrauDaVariavel());
+            return resultado;
+        } else {
+            Monomio resultado;
+            resultado.setCoeficiente(getCoeficiente() - monomio.getCoeficiente());
+            resultado.setVariavel(monomio.getVariavel());
+            resultado.setGrauDaVariavel(monomio.getGrauDaVariavel());
+            return resultado;
+        }
+    }
+}
+
+#endif // EMPRESA_H_INCLUDED
